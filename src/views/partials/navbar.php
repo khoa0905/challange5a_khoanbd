@@ -30,19 +30,19 @@ $role = $_SESSION['role'] ?? 'guest';
 </style>
 
 <div class="navbar">
-    <a href="index.php">Home</a>
-    <a href="users.php">Users List</a> 
-    <a href="assignments.php">Assignments</a> 
-    <a href="challenges.php">Challenges</a> 
+    <a href="/">Home</a>
+    <a href="/users">Users List</a> 
+    <a href="/assignments">Assignments</a> 
+    <a href="/challenges">Challenges</a> 
     <?php if ($role === 'teacher'): ?>
-        <a href="manage_student.php">Manage Students</a> 
+        <a href="/manage-students">Manage Students</a> 
     <?php endif; ?>
 
     <div class="navbar-right">
         <?php if ($role !== 'guest'): ?>
-            <a href="profile.php">My Profile</a> <a href="logout.php">Logout</a>
+            <a href="/profile">My Profile</a> <a href="/logout">Logout</a>
         <?php else: ?>
-            <a href="login.php">Login</a>
+            <a href="/login">Login</a>
         <?php endif; ?>
     </div>
 </div>

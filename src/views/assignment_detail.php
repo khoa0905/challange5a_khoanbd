@@ -3,7 +3,7 @@
 
 <body>
     <div style="margin-bottom: 20px;">
-        <a href="assignments.php">&larr; Back to Assignments</a>
+        <a href="/assignments">&larr; Back to Assignments</a>
     </div>
 
     <h1><?= htmlspecialchars($assignment['title']) ?></h1>
@@ -66,7 +66,7 @@
                 <a href="<?= htmlspecialchars($my_submission['file_path']) ?>" download>Download my submitted file</a>
             </div>
         <?php else: ?>
-            <form action="assignment_detail.php?id=<?= urlencode($assignment['id']) ?>" method="POST" enctype="multipart/form-data">
+            <form action="/assignment?id=<?= urlencode($assignment['id']) ?>" method="POST" enctype="multipart/form-data">
                 <div>
                     <label for="submission_file"><strong>Upload your answer (PDF, DOCX, ZIP):</strong></label><br><br>
                     <input type="file" id="submission_file" name="submission_file" required>

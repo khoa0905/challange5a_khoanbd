@@ -8,7 +8,7 @@
 
     <?php if (!$profile): ?>
         <p style="color: red;"><strong>User not found.</strong></p>
-        <a href="index.php">Back to Dashboard</a>
+        <a href="/">Back to Dashboard</a>
     <?php else: ?>
 
         <?php if (isset($error)): ?>
@@ -32,7 +32,7 @@
             <hr>
 
             <?php if ($_SESSION['id'] == $profile['id']): ?>
-                <form action="profile.php?id=<?= urlencode($profile['id']) ?>" method="POST" enctype="multipart/form-data">
+                <form action="/profile?id=<?= urlencode($profile['id']) ?>" method="POST" enctype="multipart/form-data">
                     
                     <div>
                         <label for="email"><strong>Email:</strong></label><br>
@@ -64,14 +64,14 @@
                 
 
         <br>
-        <a href="index.php">Back to Dashboard</a>
+        <a href="/">Back to Dashboard</a>
 
     <?php endif; ?>
     <hr>
     <h4>Message Board</h4>
 
     <?php if ($_SESSION['id'] != $profile['id']): ?>
-        <form action="messages.php" method="POST" style="margin-bottom: 20px;">
+        <form action="/messages" method="POST" style="margin-bottom: 20px;">
             <input type="hidden" name="action" value="send">
             <input type="hidden" name="receiver_id" value="<?= htmlspecialchars($profile['id']) ?>">
             <textarea name="message" rows="3" cols="40" placeholder="Leave a message..." required></textarea><br>
@@ -94,14 +94,14 @@
                     <?php if ($_SESSION['id'] == $msg['sender_id']): ?>
                         <div style="display: flex; gap: 10px;">
                             
-                            <form action="messages.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this message?');">
+                            <form action="/messages" method="POST" onsubmit="return confirm('Are you sure you want to delete this message?');">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="message_id" value="<?= $msg['id'] ?>">
                                 <input type="hidden" name="receiver_id" value="<?= $profile['id'] ?>">
                                 <button type="submit" style="color: red;">Delete</button>
                             </form>
 
-                            <form action="messages.php" method="POST" onsubmit="let newMsg = prompt('Edit your message:', '<?= htmlspecialchars(addslashes($msg['message'])) ?>'); if(newMsg) { this.new_message.value = newMsg; return true; } return false;">
+                            <form action="/messages" method="POST" onsubmit="let newMsg = prompt('Edit your message:', '<?= htmlspecialchars(addslashes($msg['message'])) ?>'); if(newMsg) { this.new_message.value = newMsg; return true; } return false;">
                                 <input type="hidden" name="action" value="edit">
                                 <input type="hidden" name="message_id" value="<?= $msg['id'] ?>">
                                 <input type="hidden" name="receiver_id" value="<?= $profile['id'] ?>">

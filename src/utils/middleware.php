@@ -1,7 +1,7 @@
 <?php
 function require_auth() {
     if (!isset($_SESSION['id'])) {
-        header('Location: login.php');
+        header('Location: /login');
         exit;
     }
 }
@@ -10,7 +10,7 @@ function require_role($required_role) {
     require_auth();
 
     if ($_SESSION['role'] !== $required_role) {
-        header('Location: index.php');
+        header('Location: /');
         exit;
     }
 }

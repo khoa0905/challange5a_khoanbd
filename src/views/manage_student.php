@@ -45,4 +45,4 @@
 </form>
 
 <br>
-<a href="index.php">Back to Dashboard</a>
+<a href="/">Back to Dashboard</a>

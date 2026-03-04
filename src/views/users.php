@@ -7,7 +7,7 @@
     <h1>User Directory</h1>
 
     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'teacher'): ?>
-        <a href="manage_student.php">Add New Student</a><br><br>
+        <a href="/manage-students">Add New Student</a><br><br>
     <?php endif; ?>
 
     <table border="1" cellpadding="10" cellspacing="0">
@@ -39,7 +39,7 @@
                         <td><?= htmlspecialchars($user['phone']) ?></td>
                         <td><?= htmlspecialchars(ucfirst($user['role'])) ?></td>
                         <td>
-                            <a href="profile.php?id=<?= urlencode($user['id']) ?>">View Details</a>
+                            <a href="/profile?id=<?= urlencode($user['id']) ?>">View Details</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

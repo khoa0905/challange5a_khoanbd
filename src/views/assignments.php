@@ -53,7 +53,7 @@
                         <td><?= htmlspecialchars($task['created_at']) ?></td>
                         <td>
                             <a href="<?= htmlspecialchars($task['file_path']) ?>" download>Download File</a> | 
-                            <a href="assignment_detail.php?id=<?= $task['id'] ?>">View / Submit</a>
+                            <a href="/assignment?id=<?= $task['id'] ?>">View / Submit</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
