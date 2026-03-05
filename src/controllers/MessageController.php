@@ -40,7 +40,7 @@ class MessageController
         }
     }
 
-    private function send(\PDO $pdo, int $user_id): void
+    private function send(PDO $pdo, int $user_id): void
     {
         $receiver_id = $_POST['receiver_id'] ?? '';
         $message     = trim($_POST['message'] ?? '');
@@ -53,7 +53,7 @@ class MessageController
         exit;
     }
 
-    private function delete(\PDO $pdo, int $user_id): void
+    private function delete(PDO $pdo, int $user_id): void
     {
         $message_id  = $_POST['message_id']  ?? '';
         $receiver_id = $_POST['receiver_id'] ?? '';
@@ -67,7 +67,7 @@ class MessageController
         exit;
     }
 
-    private function edit(\PDO $pdo, int $user_id): void
+    private function edit(PDO $pdo, int $user_id): void
     {
         $message_id  = $_POST['message_id']  ?? '';
         $new_message = trim($_POST['new_message'] ?? '');

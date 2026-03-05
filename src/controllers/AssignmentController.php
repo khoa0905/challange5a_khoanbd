@@ -25,7 +25,6 @@ class AssignmentController
         'application/octet-stream',
     ];
 
-    // GET /assignments
     public function list(): void
     {
         $pdo = $this->pdo;
@@ -36,7 +35,6 @@ class AssignmentController
         include __DIR__ . '/../views/assignments.php';
     }
 
-    // POST /assignments  (teacher uploads a new assignment)
     public function upload(): void
     {
         $pdo = $this->pdo;
@@ -74,7 +72,6 @@ class AssignmentController
         include __DIR__ . '/../views/assignments.php';
     }
 
-    // GET /assignment?id=X
     public function detail(): void
     {
         $pdo = $this->pdo;
