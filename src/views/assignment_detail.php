@@ -6,6 +6,9 @@
 
     <div class="bg-white rounded-lg shadow mb-6 p-6">
         <h3 class="text-xl font-semibold mb-3"><?= htmlspecialchars($assignment['title']) ?></h3>
+        <?php if (!empty($assignment['description'])): ?>
+            <p class="text-gray-700 mb-3"><?= nl2br(htmlspecialchars($assignment['description'])) ?></p>
+        <?php endif; ?>
         <p class="text-gray-500 mb-2"><i class="fa-solid fa-calendar mr-1"></i><strong>Date Posted:</strong> <?= htmlspecialchars($assignment['created_at']) ?></p>
         <a href="<?= htmlspecialchars($assignment['file_path']) ?>" download class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"><i class="fa-solid fa-download mr-1"></i>Download Assignment File</a>
     </div>
@@ -65,6 +68,7 @@
                     </div>
                 <?php else: ?>
                     <form action="/assignment?id=<?= urlencode($assignment['id']) ?>" method="POST" enctype="multipart/form-data">
+                        <?= csrf_field() ?>
                         <div class="mb-4">
                             <label for="submission_file" class="block text-sm font-semibold text-gray-700 mb-1">Upload your answer (PDF, DOCX, ZIP)</label>
                             <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="submission_file" name="submission_file" required>

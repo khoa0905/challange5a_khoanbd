@@ -20,16 +20,21 @@
             </div>
             <div class="p-6">
                 <form action="" method="POST" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
-                        <div class="md:col-span-5">
+                        <div class="md:col-span-4">
                             <label for="title" class="block text-sm font-semibold text-gray-700 mb-1">Assignment Title</label>
                             <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="title" name="title" required>
                         </div>
-                        <div class="md:col-span-5">
+                        <div class="md:col-span-4">
+                            <label for="description" class="block text-sm font-semibold text-gray-700 mb-1">Description (optional)</label>
+                            <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="description" name="description">
+                        </div>
+                        <div class="md:col-span-3">
                             <label for="assignment_file" class="block text-sm font-semibold text-gray-700 mb-1">File (PDF, DOCX, ZIP, TXT)</label>
                             <input type="file" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="assignment_file" name="assignment_file" required>
                         </div>
-                        <div class="md:col-span-2">
+                        <div class="md:col-span-1">
                             <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition font-medium"><i class="fa-solid fa-upload mr-1"></i>Upload</button>
                         </div>
                     </div>

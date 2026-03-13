@@ -36,6 +36,7 @@
                     <?php if ($_SESSION['id'] == $profile['id']): ?>
                         <div class="p-6">
                             <form action="/profile?id=<?= urlencode($profile['id']) ?>" method="POST" enctype="multipart/form-data">
+                                <?= csrf_field() ?>
                                 <div class="mb-4">
                                     <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
                                     <input type="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="email" name="email" value="<?= htmlspecialchars($profile['email']) ?>" required>
@@ -78,6 +79,7 @@
                     <div class="p-6">
                         <?php if ($_SESSION['id'] != $profile['id']): ?>
                             <form action="/messages" method="POST" class="mb-6">
+                                <?= csrf_field() ?>
                                 <input type="hidden" name="action" value="send">
                                 <input type="hidden" name="receiver_id" value="<?= htmlspecialchars($profile['id']) ?>">
                                 <div class="mb-2">
@@ -102,6 +104,7 @@
                                         <?php if ($_SESSION['id'] == $msg['sender_id']): ?>
                                             <div class="flex gap-2 mt-2">
                                                 <form action="/messages" method="POST" onsubmit="return confirm('Are you sure you want to delete this message?');">
+                                                    <?= csrf_field() ?>
                                                     <input type="hidden" name="action" value="delete">
                                                     <input type="hidden" name="message_id" value="<?= $msg['id'] ?>">
                                                     <input type="hidden" name="receiver_id" value="<?= $profile['id'] ?>">
@@ -109,6 +112,7 @@
                                                 </form>
 
                                                 <form action="/messages" method="POST" onsubmit="let newMsg = prompt('Edit your message:', '<?= htmlspecialchars(addslashes($msg['message'])) ?>'); if(newMsg) { this.new_message.value = newMsg; return true; } return false;">
+                                                    <?= csrf_field() ?>
                                                     <input type="hidden" name="action" value="edit">
                                                     <input type="hidden" name="message_id" value="<?= $msg['id'] ?>">
                                                     <input type="hidden" name="receiver_id" value="<?= $profile['id'] ?>">

@@ -1,4 +1,12 @@
 <?php
+session_set_cookie_params([
+    'lifetime' => 0,
+    'path'     => '/',
+    'domain'   => '',
+    'secure'   => !empty($_SERVER['HTTPS']),
+    'httponly'  => true,
+    'samesite' => 'Lax',
+]);
 session_start();
 
 spl_autoload_register(function (string $class): void {
@@ -18,7 +26,6 @@ spl_autoload_register(function (string $class): void {
     }
 });
 
-// ── Function-based files (not namespaced) ───────────────────────────────
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/../utils/middleware.php';
 require_once __DIR__ . '/../utils/helpers.php';
@@ -27,6 +34,7 @@ require_once __DIR__ . '/../services/users.php';
 require_once __DIR__ . '/../services/assignments.php';
 require_once __DIR__ . '/../services/submissions.php';
 require_once __DIR__ . '/../services/messages.php';
+require_once __DIR__ . '/../services/challenges.php';
 
-// ── Database connection ─────────────────────────────────────────────────
 $pdo = get_db_connection();
+?>

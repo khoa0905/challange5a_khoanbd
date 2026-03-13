@@ -35,6 +35,7 @@ class AuthController
         $user = authenticate_user($pdo, $username, $password);
 
         if ($user) {
+            session_regenerate_id(true);
             $_SESSION['id']   = $user['id'];
             $_SESSION['role'] = $user['role'];
             header('Location: /');
@@ -67,3 +68,4 @@ class AuthController
         exit;
     }
 }
+?>

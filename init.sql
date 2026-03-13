@@ -30,6 +30,7 @@ CREATE TABLE assignments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     teacher_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
+    description TEXT DEFAULT NULL,
     file_path VARCHAR(255) NOT NULL, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE
@@ -50,7 +51,6 @@ CREATE TABLE challenges (
     id INT AUTO_INCREMENT PRIMARY KEY,
     teacher_id INT NOT NULL,
     hint TEXT NOT NULL,
-    file_path VARCHAR(255) NOT NULL,  
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE
 );

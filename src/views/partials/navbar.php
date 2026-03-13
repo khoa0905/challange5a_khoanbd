@@ -24,7 +24,10 @@ $role = $_SESSION['role'] ?? 'guest';
                 <span class="border-l border-gray-600 h-6"></span>
                 <?php if ($role !== 'guest'): ?>
                     <a class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" href="/profile"><i class="fa-solid fa-circle-user mr-1"></i>My Profile</a>
-                    <a class="text-red-400 hover:text-red-300 px-3 py-2 text-sm font-medium" href="/logout"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</a>
+                    <form action="/logout" method="POST" class="inline">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="text-red-400 hover:text-red-300 px-3 py-2 text-sm font-medium cursor-pointer bg-transparent border-none"><i class="fa-solid fa-right-from-bracket mr-1"></i>Logout</button>
+                    </form>
                 <?php else: ?>
                     <a class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" href="/login"><i class="fa-solid fa-right-to-bracket mr-1"></i>Login</a>
                 <?php endif; ?>

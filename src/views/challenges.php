@@ -1,4 +1,14 @@
+<?php
+    $pageTitle = "Challenges";
+    include('partials/header.php');
+    include('partials/navbar.php');
+?>
+
 <div class="max-w-7xl mx-auto px-4">
+    <?php if (isset($error)): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"><?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
+
     <?php if ($_SESSION['role'] === 'teacher'): ?>
         <div class="bg-white rounded-lg shadow mb-6">
             <div class="px-6 py-4 border-b border-gray-200">
@@ -6,6 +16,7 @@
             </div>
             <div class="p-6">
                 <form action="/challenges" method="POST" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
                     <input type="hidden" name="action" value="create_challenge">
                     <div class="mb-4">
                         <label class="block text-sm font-semibold text-gray-700 mb-1">Hint</label>
@@ -35,6 +46,7 @@
                     </div>
                     <p class="mb-3"><strong>Hint:</strong> <?= nl2br(htmlspecialchars($c['hint'])) ?></p>
                     <form action="/challenges" method="POST" class="flex gap-2">
+                        <?= csrf_field() ?>
                         <input type="hidden" name="action" value="submit_guess">
                         <input type="hidden" name="challenge_id" value="<?= $c['id'] ?>">
                         <input type="text" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" name="guess" placeholder="Your guess..." required>
@@ -45,7 +57,7 @@
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <?php if ($poem_content): ?>
+    <?php if ($poem_content !== null): ?>
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-4 rounded mt-6">
             <h5 class="font-semibold mb-2"><i class="fa-solid fa-circle-check mr-1"></i>Success! Here is the content:</h5>
             <pre class="mb-3 whitespace-pre-wrap"><?= htmlspecialchars($poem_content) ?></pre>

@@ -70,7 +70,16 @@ class ProfileController
         update_profile_by_id($pdo, $user_id, $email, $phone);
 
         if ($avatar_url_input !== '') {
-            update_avatar_by_id($pdo, $user_id, $avatar_url_input);
+            $download = download_avatar_from_url($avatar_url_input);
+            if (isset($download['path'])) {
+                update_avatar_by_id($pdo, $user_id, $download['path']);
+            } elseif (isset($download['error'])) {
+                $error = $download['error'];
+                $pageTitle = 'User Profile';
+                $profile = get_user_by_id($pdo, $profile_id);
+                include __DIR__ . '/../views/profile.php';
+                return;
+            }
         } elseif ($avatar_file_input && $avatar_file_input['error'] === UPLOAD_ERR_OK) {
             $result = handle_file_upload(
                 $avatar_file_input,
@@ -86,3 +95,4 @@ class ProfileController
         exit;
     }
 }
+?>

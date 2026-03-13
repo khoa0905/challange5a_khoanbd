@@ -47,6 +47,7 @@ class AssignmentController
             $error = 'Only teachers can upload assignments.';
         } else {
             $title = $_POST['title'] ?? '';
+            $description = trim($_POST['description'] ?? '') ?: null;
 
             if ($title === '') {
                 $error = 'Please provide a title.';
@@ -61,7 +62,7 @@ class AssignmentController
                 if (isset($result['error'])) {
                     $error = $result['error'];
                 } else {
-                    add_assignment($pdo, $title, $result['path'], $_SESSION['id']);
+                    add_assignment($pdo, $title, $description, $result['path'], $_SESSION['id']);
                     $success = 'Assignment uploaded successfully!';
                 }
             }
@@ -99,7 +100,6 @@ class AssignmentController
         include __DIR__ . '/../views/assignment_detail.php';
     }
 
-    // POST /assignment?id=X  (student submits work)
     public function submit(): void
     {
         $pdo = $this->pdo;
@@ -137,7 +137,6 @@ class AssignmentController
             }
         }
 
-        // Re-render detail page with error
         if ($_SESSION['role'] === 'teacher') {
             $submissions = get_submissions_by_assignment($pdo, $assignment_id);
         } else {
@@ -148,3 +147,4 @@ class AssignmentController
         include __DIR__ . '/../views/assignment_detail.php';
     }
 }
+?>

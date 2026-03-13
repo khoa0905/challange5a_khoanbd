@@ -46,10 +46,22 @@
                                         <?= htmlspecialchars(ucfirst($user['role'])) ?>
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="px-6 py-4 whitespace-nowrap flex gap-2">
                                     <a href="/profile?id=<?= urlencode($user['id']) ?>" class="inline-flex items-center px-3 py-1.5 border border-blue-600 text-blue-600 text-sm rounded-lg hover:bg-blue-50 transition">
                                         <i class="fa-solid fa-eye mr-1"></i>View
                                     </a>
+                                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'teacher' && $user['role'] === 'student'): ?>
+                                        <a href="/edit-student?id=<?= urlencode($user['id']) ?>" class="inline-flex items-center px-3 py-1.5 border border-yellow-600 text-yellow-600 text-sm rounded-lg hover:bg-yellow-50 transition">
+                                            <i class="fa-solid fa-pencil mr-1"></i>Edit
+                                        </a>
+                                        <form action="/delete-student" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this student?');">
+                                            <?= csrf_field() ?>
+                                            <input type="hidden" name="id" value="<?= htmlspecialchars($user['id']) ?>">
+                                            <button type="submit" class="inline-flex items-center px-3 py-1.5 border border-red-600 text-red-600 text-sm rounded-lg hover:bg-red-50 transition">
+                                                <i class="fa-solid fa-trash mr-1"></i>Delete
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

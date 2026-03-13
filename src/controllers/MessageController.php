@@ -43,7 +43,7 @@ class MessageController
     private function send(PDO $pdo, int $user_id): void
     {
         $receiver_id = $_POST['receiver_id'] ?? '';
-        $message     = trim($_POST['message'] ?? '');
+        $message = trim($_POST['message'] ?? '');
 
         if ($receiver_id && $message !== '') {
             send_message($pdo, $user_id, $receiver_id, $message);
@@ -82,3 +82,4 @@ class MessageController
         exit;
     }
 }
+?>

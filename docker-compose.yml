@@ -2,7 +2,7 @@ services:
   web:
     build: .
     ports:
-      - "8081:80"
+      - "8082:80"
     volumes:
       - ./src:/var/www/html
     depends_on:
@@ -10,14 +10,11 @@ services:
 
   db:
     image: mysql:8.0
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: class_manager
     volumes:
       - db_data:/var/lib/mysql
-      # Automatically run this script to create your tables
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
 
 volumes:
