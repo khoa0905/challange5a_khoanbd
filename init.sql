@@ -47,6 +47,7 @@ CREATE TABLE submissions (
     FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- 5. Challenge Table
 CREATE TABLE challenges (
     id INT AUTO_INCREMENT PRIMARY KEY,
     teacher_id INT NOT NULL,
