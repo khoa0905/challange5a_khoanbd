@@ -1,11 +1,11 @@
 CREATE DATABASE IF NOT EXISTS class_manager;
 USE class_manager;
 
--- 1. Users Table (Handles both Teachers and Students)
+-- 1. Users Table 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,       -- Sized for secure password hashes (e.g., bcrypt)
+    password VARCHAR(255) NOT NULL,    
     full_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20),
@@ -14,7 +14,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 2. Messages Table (User-to-User communication)
+-- 2. Messages Table 
 CREATE TABLE messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sender_id INT NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE messages (
     FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- 3. Assignments Table (Uploaded by Teachers)
+-- 3. Assignments Table 
 CREATE TABLE assignments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     teacher_id INT NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE assignments (
     FOREIGN KEY (teacher_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- 4. Submissions Table (Uploaded by Students)
+-- 4. Submissions Table 
 CREATE TABLE submissions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     assignment_id INT NOT NULL,
