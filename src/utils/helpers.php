@@ -25,7 +25,7 @@ function handle_file_upload(?array $file, string $target_dir, array $allowed_ext
         mkdir($target_dir, 0777, true);
     }
 
-    $new_name    = bin2hex(random_bytes(16)) . '.' . $ext;
+    $new_name = bin2hex(random_bytes(16)) . '.' . $ext;
     $target_file = $target_dir . $new_name;
 
     if (!move_uploaded_file($file['tmp_name'], $target_file)) {
@@ -49,8 +49,15 @@ function download_avatar_from_url(string $url): array
         return ['error' => 'Avatar URL must use HTTP or HTTPS.'];
     }
 
-    if (in_array($host, ['localhost', '127.0.0.1'], true)) {
-        return ['error' => 'Localhost avatar URL is not allowed.'];
+    $ips = gethostbynamel($host);
+    if ($ips === false || empty($ips)) {
+        return ['error' => 'Could not resolve the hostname.'];
+    }
+
+    $resolvedIp = $ips[0];
+
+    if (!filter_var($resolvedIp, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) {
+        return ['error' => 'URL not allowed'];
     }
 
     $options = [
@@ -61,13 +68,9 @@ function download_avatar_from_url(string $url): array
                         "Accept-Language: en-US,en;q=0.9\r\n" .
                         "Connection: close\r\n",
             'timeout' => 15,
-            'follow_location' => 1,
-            'max_redirects' => 5,
+            'follow_location' => 0,
+            'max_redirects' => 0,
             'ignore_errors' => true
-        ],
-        'ssl' => [
-            'verify_peer' => false,
-            'verify_peer_name' => false,
         ]
     ];
 
@@ -94,10 +97,9 @@ function download_avatar_from_url(string $url): array
     $ext = $allowed[$mime];
     $filename = bin2hex(random_bytes(16)) . '.' . $ext;
     
-    // In Lab 5, publics/uploads/avatars is the target relative to the public root
     $targetDir = __DIR__ . '/../publics/uploads/avatars/';
     if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0777, true);
+        mkdir($targetDir, 0755, true);
     }
 
     if (file_put_contents($targetDir . $filename, $content) === false) {

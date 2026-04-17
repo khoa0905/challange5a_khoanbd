@@ -18,7 +18,7 @@ class MessageController
         $pdo = $this->pdo;
         require_auth();
 
-        $action  = $_POST['action']  ?? '';
+        $action = $_POST['action']  ?? '';
         $user_id = $_SESSION['id'];
 
         switch ($action) {
@@ -55,7 +55,7 @@ class MessageController
 
     private function delete(PDO $pdo, int $user_id): void
     {
-        $message_id  = $_POST['message_id']  ?? '';
+        $message_id = $_POST['message_id']  ?? '';
         $receiver_id = $_POST['receiver_id'] ?? '';
 
         $msg = get_message_by_id($pdo, $message_id);
@@ -69,7 +69,7 @@ class MessageController
 
     private function edit(PDO $pdo, int $user_id): void
     {
-        $message_id  = $_POST['message_id']  ?? '';
+        $message_id = $_POST['message_id']  ?? '';
         $new_message = trim($_POST['new_message'] ?? '');
         $receiver_id = $_POST['receiver_id'] ?? '';
 

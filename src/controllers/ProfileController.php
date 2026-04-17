@@ -21,7 +21,7 @@ class ProfileController
         $user_id = $_SESSION['id'];
         $profile_id = $_GET['id'] ?? $user_id;
         $profile = get_user_by_id($pdo, $profile_id);
-        $messages  = get_visible_messages($pdo, $profile_id, $_SESSION['id']);
+        $messages = get_visible_messages($pdo, $profile_id, $_SESSION['id']);
 
         if (!$profile) {
             $error = 'User not found';

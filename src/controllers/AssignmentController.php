@@ -7,6 +7,7 @@ use PDO;
 class AssignmentController
 {
     private PDO $pdo;
+    private const STORAGE_DIR = __DIR__ . '/../storage';
 
     public function __construct(PDO $pdo)
     {
@@ -54,7 +55,7 @@ class AssignmentController
             } else {
                 $result = handle_file_upload(
                     $_FILES['assignment_file'] ?? null,
-                    'uploads/assignments/',
+                    self::STORAGE_DIR . '/assignments/',
                     self::ALLOWED_EXTS,
                     self::ALLOWED_MIMES
                 );
@@ -124,7 +125,7 @@ class AssignmentController
         } else {
             $result = handle_file_upload(
                 $_FILES['submission_file'] ?? null,
-                'uploads/submissions/',
+                self::STORAGE_DIR . '/submissions/',
                 self::ALLOWED_EXTS
             );
 
@@ -145,6 +146,92 @@ class AssignmentController
 
         $pageTitle = 'Assignment: ' . $assignment['title'];
         include __DIR__ . '/../views/assignment_detail.php';
+    }
+
+    public function downloadAssignment(): void
+    {
+        $pdo = $this->pdo;
+        require_auth();
+
+        $assignment_id = $_GET['id'] ?? null;
+        if (!$assignment_id) {
+            http_response_code(404);
+            return;
+        }
+
+        $assignment = get_assignment_by_id($pdo, $assignment_id);
+        if (!$assignment) {
+            http_response_code(404);
+            return;
+        }
+
+        $file = $this->resolveDownloadPath($assignment['file_path']);
+        if ($file === null) {
+            http_response_code(404);
+            return;
+        }
+
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+        header('Content-Length: ' . filesize($file));
+        readfile($file);
+        exit;
+    }
+
+    public function downloadSubmission(): void
+    {
+        $pdo = $this->pdo;
+        require_auth();
+
+        $submission_id = $_GET['id'] ?? null;
+        if (!$submission_id) {
+            http_response_code(404);
+            return;
+        }
+
+        $submission = get_submission_by_id($pdo, $submission_id);
+        if (!$submission) {
+            http_response_code(404);
+            return;
+        }
+
+        if ($_SESSION['role'] === 'teacher') {
+            if ((int) $submission['teacher_id'] !== (int) $_SESSION['id']) {
+                http_response_code(403);
+                return;
+            }
+        } elseif ((int) $submission['student_id'] !== (int) $_SESSION['id']) {
+            http_response_code(403);
+            return;
+        }
+
+        $file = $this->resolveDownloadPath($submission['file_path']);
+        if ($file === null) {
+            http_response_code(404);
+            return;
+        }
+
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+        header('Content-Length: ' . filesize($file));
+        readfile($file);
+        exit;
+    }
+
+    private function resolveDownloadPath(string $storedPath): ?string
+    {
+        $baseStorage = realpath(self::STORAGE_DIR);
+
+        if ($baseStorage === false) {
+            return null;
+        }
+
+        $candidate = realpath($storedPath);
+        if ($candidate && str_starts_with($candidate, $baseStorage) && is_file($candidate)) {
+            return $candidate;
+        }
+
+        return null;
     }
 }
 ?>

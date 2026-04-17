@@ -25,4 +25,15 @@ function get_student_submission($pdo, $assignment_id, $student_id) {
     $stmt->execute([$assignment_id, $student_id]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+function get_submission_by_id($pdo, $submission_id) {
+    $stmt = $pdo->prepare(
+        "SELECT s.id, s.assignment_id, s.student_id, s.file_path, a.teacher_id
+         FROM submissions s
+         JOIN assignments a ON a.id = s.assignment_id
+         WHERE s.id = ?"
+    );
+    $stmt->execute([$submission_id]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 ?>

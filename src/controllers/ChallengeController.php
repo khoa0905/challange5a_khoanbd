@@ -8,7 +8,7 @@ class ChallengeController
 {
     private PDO $pdo;
 
-    private const STORAGE_DIR = __DIR__ . '/../challenge_files';
+    private const STORAGE_DIR = __DIR__ . '/../storage';
 
     public function __construct(PDO $pdo)
     {
@@ -30,10 +30,10 @@ class ChallengeController
         $pdo = $this->pdo;
         require_auth();
 
-        $challenges   = get_all_challenges($pdo);
+        $challenges = get_all_challenges($pdo);
         $poem_content = null;
         $download_link = null;
-        $pageTitle    = 'Challenges';
+        $pageTitle = 'Challenges';
 
         include __DIR__ . '/../views/challenges.php';
     }
@@ -63,7 +63,7 @@ class ChallengeController
     {
         require_auth();
 
-        $id       = (int) $matches['id'];
+        $id = (int) $matches['id'];
         $filename = urldecode($matches['name']);
 
         $challenge = get_challenge_by_id($this->pdo, $id);
@@ -103,10 +103,10 @@ class ChallengeController
 
         if ($hint === '' || !$file || $file['error'] !== UPLOAD_ERR_OK) {
             $error = 'Please provide both a hint and a .txt file.';
-            $challenges   = get_all_challenges($pdo);
+            $challenges = get_all_challenges($pdo);
             $poem_content = null;
             $download_link = null;
-            $pageTitle    = 'Challenges';
+            $pageTitle = 'Challenges';
             include __DIR__ . '/../views/challenges.php';
             return;
         }
@@ -114,10 +114,10 @@ class ChallengeController
         $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         if ($ext !== 'txt') {
             $error = 'Only .txt files are allowed.';
-            $challenges   = get_all_challenges($pdo);
+            $challenges = get_all_challenges($pdo);
             $poem_content = null;
             $download_link = null;
-            $pageTitle    = 'Challenges';
+            $pageTitle = 'Challenges';
             include __DIR__ . '/../views/challenges.php';
             return;
         }
@@ -130,7 +130,7 @@ class ChallengeController
         }
 
         $original_name = $file['name'];  
-        $dest          = $dir . '/' . $original_name;
+        $dest = $dir . '/' . $original_name;
 
         move_uploaded_file($file['tmp_name'], $dest);
 
@@ -143,7 +143,7 @@ class ChallengeController
         $pdo = $this->pdo;
 
         $challenge_id = $_POST['challenge_id'] ?? null;
-        $guess        = trim($_POST['guess'] ?? '');
+        $guess = trim($_POST['guess'] ?? '');
 
         if (!$challenge_id || $guess === '') {
             header('Location: /challenges');
@@ -164,19 +164,19 @@ class ChallengeController
 
         $answer = pathinfo(basename($abs_path), PATHINFO_FILENAME);
 
-        $poem_content  = null;
+        $poem_content = null;
         $download_link = null;
-        $error         = null;
+        $error = null;
 
         if (strcasecmp($guess, $answer) === 0) {
-            $poem_content  = file_get_contents($abs_path);
+            $poem_content = file_get_contents($abs_path);
             $download_link = '/challenge/' . $challenge['id'] . '/' . urlencode(basename($abs_path));
         } else {
             $error = 'Wrong answer! Try again.';
         }
 
         $challenges = get_all_challenges($pdo);
-        $pageTitle  = 'Challenges';
+        $pageTitle = 'Challenges';
         include __DIR__ . '/../views/challenges.php';
     }
 }

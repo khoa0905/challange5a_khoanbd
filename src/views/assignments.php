@@ -69,7 +69,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($task['teacher_name']) ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($task['created_at']) ?></td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="<?= htmlspecialchars($task['file_path']) ?>" download class="inline-flex items-center px-3 py-1.5 border border-gray-400 text-gray-600 text-sm rounded-lg hover:bg-gray-50 transition mr-1"><i class="fa-solid fa-download mr-1"></i>Download</a>
+                                    <a href="/assignment-download?id=<?= urlencode($task['id']) ?>" class="inline-flex items-center px-3 py-1.5 border border-gray-400 text-gray-600 text-sm rounded-lg hover:bg-gray-50 transition mr-1"><i class="fa-solid fa-download mr-1"></i>Download</a>
                                     <a href="/assignment?id=<?= $task['id'] ?>" class="inline-flex items-center px-3 py-1.5 border border-blue-600 text-blue-600 text-sm rounded-lg hover:bg-blue-50 transition"><i class="fa-solid fa-eye mr-1"></i>View / Submit</a>
                                 </td>
                             </tr>

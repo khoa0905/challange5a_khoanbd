@@ -1,2 +1,8 @@
 todo.txt
 publics/uploads/*
+src/publics/uploads/*
+src/storage/*
+!src/storage/assignments/
+!src/storage/submissions/
+src/storage/assignments/*
+src/storage/submissions/*

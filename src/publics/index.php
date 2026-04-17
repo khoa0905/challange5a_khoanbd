@@ -37,6 +37,8 @@ $router->get('/assignments', [AssignmentController::class, 'list']);
 $router->post('/assignments', [AssignmentController::class, 'upload']);
 $router->get('/assignment', [AssignmentController::class, 'detail']);
 $router->post('/assignment', [AssignmentController::class, 'submit']);
+$router->get('/assignment-download', [AssignmentController::class, 'downloadAssignment']);
+$router->get('/submission-download', [AssignmentController::class, 'downloadSubmission']);
 
 // Messages
 $router->post('/messages', [MessageController::class, 'handle']);

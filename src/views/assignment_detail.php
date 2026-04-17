@@ -10,7 +10,7 @@
             <p class="text-gray-700 mb-3"><?= nl2br(htmlspecialchars($assignment['description'])) ?></p>
         <?php endif; ?>
         <p class="text-gray-500 mb-2"><i class="fa-solid fa-calendar mr-1"></i><strong>Date Posted:</strong> <?= htmlspecialchars($assignment['created_at']) ?></p>
-        <a href="<?= htmlspecialchars($assignment['file_path']) ?>" download class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"><i class="fa-solid fa-download mr-1"></i>Download Assignment File</a>
+        <a href="/assignment-download?id=<?= urlencode($assignment['id']) ?>" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"><i class="fa-solid fa-download mr-1"></i>Download Assignment File</a>
     </div>
 
     <?php if (isset($error)): ?>
@@ -44,7 +44,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($sub['username']) ?></td>
                                     <td class="px-6 py-4 whitespace-nowrap"><?= htmlspecialchars($sub['submitted_at']) ?></td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="<?= htmlspecialchars($sub['file_path']) ?>" download class="inline-flex items-center px-3 py-1.5 border border-blue-600 text-blue-600 text-sm rounded-lg hover:bg-blue-50 transition"><i class="fa-solid fa-download mr-1"></i>Download</a>
+                                        <a href="/submission-download?id=<?= urlencode($sub['id']) ?>" class="inline-flex items-center px-3 py-1.5 border border-blue-600 text-blue-600 text-sm rounded-lg hover:bg-blue-50 transition"><i class="fa-solid fa-download mr-1"></i>Download</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -64,7 +64,7 @@
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
                         <p class="mb-1"><i class="fa-solid fa-circle-check mr-1"></i><strong>You have successfully submitted this assignment.</strong></p>
                         <p class="mb-2"><strong>Submitted on:</strong> <?= htmlspecialchars($my_submission['submitted_at']) ?></p>
-                        <a href="<?= htmlspecialchars($my_submission['file_path']) ?>" download class="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition"><i class="fa-solid fa-download mr-1"></i>Download my submitted file</a>
+                        <a href="/submission-download?id=<?= urlencode($my_submission['id']) ?>" class="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition"><i class="fa-solid fa-download mr-1"></i>Download my submitted file</a>
                     </div>
                 <?php else: ?>
                     <form action="/assignment?id=<?= urlencode($assignment['id']) ?>" method="POST" enctype="multipart/form-data">

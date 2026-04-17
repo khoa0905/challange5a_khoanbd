@@ -26,8 +26,8 @@ class Router
     public function pattern(string $method, string $regex, array $handler): void
     {
         $this->patternRoutes[] = [
-            'method'  => $method,
-            'regex'   => $regex,
+            'method' => $method,
+            'regex' => $regex,
             'handler' => $handler,
         ];
     }
